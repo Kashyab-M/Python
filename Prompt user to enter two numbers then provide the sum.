@@ -1,0 +1,15 @@
+"""
+Developer: Kashyab Maharjan
+Date: May 15, 2024
+Purpose:This program prompts the user to enter two number then provide the sum.
+"""
+#Prompt the user to enter the first number
+print("Enter the first number: ")
+a=int(input())
+
+# Prompt the sure to enter the second number
+print("Enter the second number: ")
+b=int(input())
+
+# Calculate the sum of the two numbers
+print("The sum of the two numbers is: ", a+b)
