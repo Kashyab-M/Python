@@ -1,0 +1,16 @@
+x"""
+Developer: Kashyab Maharjan
+Date: May 14, 2024
+Purpose:This program prompts the user to enter their first and last names, then prints them together.
+"""
+
+# use print to print string
+print("Enter your first name")
+# use input to get user input
+a = input()
+
+print("Enter your last name")
+#USE input to get user input
+b = input()
+#USE print to print string
+print("Your name is " + a + " " + b)
