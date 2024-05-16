@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+   int litterSizeLow = 3; // Low end of litter size range
+   int yearlyLittersLow = 5; // Low end of litters per year
+   int litterSizeHigh = 14; // High end of litter size range
+   int yearlyLittersHigh = 10; // High end of litters per year
+
+   cout << "One female mouse may give birth to " << (litterSizeLow * yearlyLittersLow) << " mice," << endl;
+   cout << "and up to " << (litterSizeHigh * yearlyLittersHigh) << " mice, in a year." << endl;
+   
+   return 0;
+}
