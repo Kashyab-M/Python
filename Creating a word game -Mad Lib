@@ -1,0 +1,17 @@
+# A game inspired by "Mad Libs" where user enters nouns,
+# verbs, etc., and then a story using those words is output.
+
+def main():
+    word_relative = input("Enter a kind of relative: ")
+    word_food = input("Enter a kind of food: ")
+    word_adjective = input("Enter an adjective: ")
+    word_time_period = input("Enter a time period: ")
+
+    # Tell the story
+    print()
+    print(f"My {word_relative} says eating {word_food}")
+    print(f"will make me more {word_adjective},")
+    print(f"so now I eat it every {word_time_period}.")
+
+if __name__ == "__main__":
+    main()
