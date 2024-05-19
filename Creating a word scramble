@@ -1,0 +1,8 @@
+# Prompt the user to enter a 5-letter word
+user_word = input("Enter a 5-letter word: ")
+
+# Scramble the word by rearranging its letters according to a specified pattern
+scrambled_word = user_word[3] + user_word[1] + user_word[4] + user_word[0] + user_word[2]
+
+# Print the scrambled word
+print("Scrambled:", scrambled_word)
