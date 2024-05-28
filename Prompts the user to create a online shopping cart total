@@ -1,0 +1,81 @@
+#Developer: Kashyab Maharjan
+# Date: May 27, 2024
+# Purpose:This program prompts the user to create a online shopping cart total.
+
+
+class ItemToPurchase:
+
+    def __init__(self):
+        # Initialize default values for item attributes
+        self.item_name = "none"  # Default item name
+        self.item_price = 0  # Default item price
+        self.item_quantity = 0  # Default item quantity
+
+    def set_name(self, name):
+        # Set the name of the item
+        self.item_name = name
+
+    def set_price(self, price):
+        # Set the price of the item
+        self.item_price = price
+
+    def set_quantity(self, quantity):
+        # Set the quantity of the item
+        self.item_quantity = quantity
+
+    def get_name(self):
+        # Get the name of the item
+        return self.item_name
+
+    def get_price(self):
+        # Get the price of the item
+        return self.item_price
+
+    def get_quantity(self):
+        # Get the quantity of the item
+        return self.item_quantity
+
+
+def main():
+    # Create instances of ItemToPurchase class for two items
+    item1 = ItemToPurchase()
+    item2 = ItemToPurchase()
+
+    # Input details for item 1
+    print("Item 1")
+    name1 = input("Enter the item name:\n")  # Prompt for item name
+    item1.set_name(name1)  # Set name for item 1
+    price1 = int(input("Enter the item price:\n"))  # Prompt for item price
+    item1.set_price(price1)  # Set price for item 1
+    quantity1 = int(
+        input("Enter the item quantity:\n"))  # Prompt for item quantity
+    item1.set_quantity(quantity1)  # Set quantity for item 1
+
+    # Input details for item 2
+    print("\nItem 2")
+    name2 = input("Enter the item name:\n")  # Prompt for item name
+    item2.set_name(name2)  # Set name for item 2
+    price2 = int(input("Enter the item price:\n"))  # Prompt for item price
+    item2.set_price(price2)  # Set price for item 2
+    quantity2 = int(
+        input("Enter the item quantity:\n"))  # Prompt for item quantity
+    item2.set_quantity(quantity2)  # Set quantity for item 2
+
+    # Output the total cost
+    print("\nTOTAL COST")
+    # Print details of item 1
+    print(
+        f"{item1.get_name()} {item1.get_quantity()} @ ${item1.get_price()} = ${item1.get_price() * item1.get_quantity()}"
+    )
+    # Print details of item 2
+    print(
+        f"{item2.get_name()} {item2.get_quantity()} @ ${item2.get_price()} = ${item2.get_price() * item2.get_quantity()}"
+    )
+    # Calculate and print total cost
+    total_cost = (item1.get_price() * item1.get_quantity()) + (
+        item2.get_price() * item2.get_quantity())
+    print(f"\nTotal: ${total_cost}")
+
+
+if __name__ == "__main__":
+    main()
