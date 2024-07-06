@@ -1,0 +1,36 @@
+from datetime import datetime
+
+def calculate_time_spent(start_time, end_time):
+    """
+    Calculate the time difference in minutes between start_time and end_time.
+    
+    Parameters:
+    start_time (str): The start time in HH:MM format.
+    end_time (str): The end time in HH:MM format.
+    
+    Returns:
+    float: The difference in minutes.
+    """
+    # Define the time format
+    fmt = '%H:%M'
+    # Parse the input strings into datetime objects
+    start_dt = datetime.strptime(start_time, fmt)
+    end_dt = datetime.strptime(end_time, fmt)
+    
+    # Calculate the difference between end time and start time
+    tdelta = end_dt - start_dt
+    # Convert the time difference to minutes and return
+    return tdelta.total_seconds() / 60
+
+# Prompt user for start time
+start_time = input("Enter the start time (HH:MM): ")
+# Prompt user for end time
+end_time = input("Enter the end time (HH:MM): ")
+
+try:
+    # Calculate the time spent using the phone
+    time_spent = calculate_time_spent(start_time, end_time)
+    # Output the result
+    print(f"You spent {time_spent} minutes using your phone.")
+except ValueError:
+    print("Invalid time format. Please enter the time in HH:MM format.")
