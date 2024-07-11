@@ -1,0 +1,25 @@
+def calculate_total_miles(daily_miles):
+    """
+    Function to calculate total miles run over a given number of days
+    :param daily_miles: List of miles run each day
+    :return: Total miles run
+    """
+    return sum(daily_miles)  # Sum up the miles run each day and return the total
+
+def main():
+    """
+    Main function to execute the program
+    """
+    days = int(input("Enter the number of training days: "))  # Get the number of training days from user input
+    daily_miles = []  # List to store the miles run each day
+
+    print("Enter the miles run each day:")
+    for i in range(days):  # Loop through each day
+        miles = float(input(f"Day {i + 1}: "))  # Get the miles run for each day from user input
+        daily_miles.append(miles)  # Add the miles run each day to the list
+
+    total_miles = calculate_total_miles(daily_miles)  # Calculate total miles run
+    print(f"Total miles run over {days} days: {total_miles} miles")  # Display total miles run
+
+if __name__ == "__main__":
+    main()  # Execute the main function
