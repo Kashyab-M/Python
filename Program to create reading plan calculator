@@ -1,0 +1,24 @@
+def main():
+    # Get book details from user
+    book_name = input("Enter the name of the book: ")
+    author = input("Enter the author's name: ")
+    total_pages = int(input("Enter the total number of pages: "))
+    days = 14  # 2 weeks
+
+    # Calculate pages to read per day
+    pages_per_day = total_pages // days
+    remaining_pages = total_pages % days
+
+    # Display book details and reading plan
+    print("\nBook Details:")
+    print(f"Book Name: {book_name}")
+    print(f"Author: {author}")
+    print(f"Total Pages: {total_pages}")
+
+    print("\nReading Plan:")
+    print(f"You need to read {pages_per_day} pages per day to finish the book in 2 weeks.")
+    if remaining_pages > 0:
+        print(f"Additionally, you will have to read {remaining_pages} extra pages over the course of 2 weeks to completely finish the book.")
+
+if __name__ == "__main__":
+    main()
