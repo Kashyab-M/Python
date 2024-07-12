@@ -1,0 +1,25 @@
+def calculate_sales_tax(price, tax_rate):
+    # Calculate the tax amount
+    tax_amount = price * (tax_rate / 100.0)
+    
+    # Calculate the total amount
+    total_amount = price + tax_amount
+    
+    return tax_amount, total_amount
+
+def main():
+    # Get the price of the item
+    price = float(input("Enter the price of the item: $"))
+    
+    # Get the sales tax rate (in percentage)
+    tax_rate = float(input("Enter the sales tax rate (in percentage): "))
+    
+    # Calculate the sales tax and total amount
+    tax_amount, total_amount = calculate_sales_tax(price, tax_rate)
+    
+    # Output the results
+    print(f"Sales Tax Amount: ${tax_amount:.2f}")
+    print(f"Total Amount: ${total_amount:.2f}")
+
+if __name__ == "__main__":
+    main()
