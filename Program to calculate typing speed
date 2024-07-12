@@ -1,0 +1,40 @@
+import time
+
+def calculate_typing_speed(text, start_time, end_time):
+    # Calculate the number of words in the text
+    word_count = len(text.split())
+    
+    # Calculate the duration in minutes
+    duration = (end_time - start_time) / 60
+    
+    # Calculate typing speed in WPM
+    wpm = word_count / duration
+    
+    return wpm
+
+def main():
+    text = "The quick brown fox jumps over the lazy dog."
+    
+    print("Type the following text as fast as you can:")
+    print(text)
+    
+    input("Press Enter to start typing...")
+    
+    # Start the timer
+    start_time = time.time()
+    
+    # Get the user's input
+    user_input = input("Type here: ")
+    
+    # End the timer
+    end_time = time.time()
+    
+    # Calculate typing speed in WPM
+    wpm = calculate_typing_speed(text, start_time, end_time)
+    
+    # Display results
+    print(f"Typing Speed: {wpm:.2f} WPM")
+    print(f"Time taken: {end_time - start_time:.2f} seconds")
+
+if __name__ == "__main__":
+    main()
