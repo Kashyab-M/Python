@@ -21,6 +21,7 @@ ship_speed = 5
 # Asteroid settings
 asteroid_size = 30
 asteroid_speed = 1
+new_asteroid_time = 2000  # Milliseconds
 
 # Laser settings
 laser_speed = 10
@@ -36,7 +37,9 @@ def draw_ship(x, y):
 
 # Function to draw a laser
 def draw_laser(x, y):
-    pygame.draw.rect(screen, WHITE, (x, y, laser_size, laser_size))
+    pygame.draw.rect(
+        screen, WHITE,
+        (x - laser_size // 2, y - laser_size, laser_size, laser_size))
 
 
 # Function to check collision between two circles
@@ -67,10 +70,19 @@ def main():
     score = 0
     font = pygame.font.SysFont(None, 55)
 
+    # Timer for spawning new asteroids
+    pygame.time.set_timer(pygame.USEREVENT, new_asteroid_time)
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.USEREVENT:
+                # Spawn a new asteroid
+                asteroids.append(
+                    (random.randint(0, WIDTH), random.randint(0, HEIGHT),
+                     random.choice([-asteroid_speed, asteroid_speed]),
+                     random.choice([-asteroid_speed, asteroid_speed])))
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
