@@ -1,0 +1,145 @@
+import pygame
+import random
+import math
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Asteroids")
+
+# Colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+
+# Ship settings
+ship_size = 20
+ship_speed = 5
+
+# Asteroid settings
+asteroid_size = 30
+asteroid_speed = 1
+
+# Laser settings
+laser_speed = 10
+laser_size = 5
+
+
+# Function to draw the ship
+def draw_ship(x, y):
+    points = [(x, y - ship_size), (x - ship_size // 2, y + ship_size // 2),
+              (x + ship_size // 2, y + ship_size // 2)]
+    pygame.draw.polygon(screen, WHITE, points)
+
+
+# Function to draw a laser
+def draw_laser(x, y):
+    pygame.draw.rect(screen, WHITE, (x, y, laser_size, laser_size))
+
+
+# Function to check collision between two circles
+def check_collision(ax, ay, ar, bx, by, br):
+    distance = math.sqrt((ax - bx)**2 + (ay - by)**2)
+    return distance < ar + br
+
+
+# Main game function
+def main():
+    clock = pygame.time.Clock()
+    running = True
+
+    # Ship variables
+    x, y = WIDTH / 2, HEIGHT / 2
+    velocity_x, velocity_y = 0, 0
+
+    # Asteroids list
+    asteroids = [(random.randint(0, WIDTH), random.randint(0, HEIGHT),
+                  random.choice([-asteroid_speed, asteroid_speed]),
+                  random.choice([-asteroid_speed, asteroid_speed]))
+                 for _ in range(5)]
+
+    # Lasers list
+    lasers = []
+
+    # Score
+    score = 0
+    font = pygame.font.SysFont(None, 55)
+
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            velocity_x = -ship_speed
+        elif keys[pygame.K_RIGHT]:
+            velocity_x = ship_speed
+        else:
+            velocity_x = 0
+
+        if keys[pygame.K_UP]:
+            velocity_y = -ship_speed
+        elif keys[pygame.K_DOWN]:
+            velocity_y = ship_speed
+        else:
+            velocity_y = 0
+
+        # Update ship position
+        x += velocity_x
+        y += velocity_y
+
+        # Screen wrap-around
+        x %= WIDTH
+        y %= HEIGHT
+
+        # Shoot laser continuously from the front of the ship
+        if len(lasers) == 0 or lasers[-1][1] < y - ship_size - laser_size:
+            lasers.append((x, y - ship_size))
+
+        # Update asteroid positions
+        for i, (ax, ay, vx, vy) in enumerate(asteroids):
+            ax += vx
+            ay += vy
+            ax %= WIDTH
+            ay %= HEIGHT
+            asteroids[i] = (ax, ay, vx, vy)
+
+        # Update laser positions and remove off-screen lasers
+        lasers = [(lx, ly - laser_speed) for lx, ly in lasers if ly > 0]
+
+        # Check for collisions
+        for laser in lasers[:]:
+            for asteroid in asteroids[:]:
+                if check_collision(laser[0], laser[1], laser_size // 2,
+                                   asteroid[0], asteroid[1],
+                                   asteroid_size // 2):
+                    lasers.remove(laser)
+                    asteroids.remove(asteroid)
+                    score += 1
+                    break
+
+        # Drawing
+        screen.fill(BLACK)
+        draw_ship(x, y)
+        for ax, ay, _, _ in asteroids:
+            pygame.draw.circle(screen, WHITE, (int(ax), int(ay)),
+                               asteroid_size // 2)
+        for lx, ly in lasers:
+            draw_laser(lx, ly)
+
+        # Display score
+        score_text = font.render(f'Score: {score}', True, WHITE)
+        screen.blit(score_text, [10, 10])
+
+        pygame.display.flip()
+
+        clock.tick(30)
+
+    pygame.quit()
+
+
+if __name__ == "__main__":
+    main()
