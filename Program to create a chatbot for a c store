@@ -1,0 +1,40 @@
+def print_options(options):
+    for idx, option in enumerate(options, 1):
+        print(f"{idx}. {option}")
+
+def get_choice(options):
+    while True:
+        choice = input("Please select an option by entering the corresponding number: ")
+        if choice.isdigit() and 1 <= int(choice) <= len(options):
+            return int(choice) - 1
+        print("Invalid choice. Please try again.")
+
+def convenience_store_chatbot():
+    print("Welcome to the convenience store chatbot!")
+    
+    # First question
+    options1 = ["Snacks", "Drinks", "Groceries", "Personal Care"]
+    print("\nWhat type of item are you looking for?")
+    print_options(options1)
+    choice1 = get_choice(options1)
+    category = options1[choice1]
+    
+    # Second question based on the first choice
+    if category == "Snacks":
+        options2 = ["Chips", "Chocolate", "Cookies", "Nuts"]
+    elif category == "Drinks":
+        options2 = ["Water", "Soda", "Juice", "Energy Drink"]
+    elif category == "Groceries":
+        options2 = ["Bread", "Milk", "Eggs", "Fruit"]
+    else:  # Personal Care
+        options2 = ["Shampoo", "Soap", "Toothpaste", "Deodorant"]
+    
+    print(f"\nWhat type of {category.lower()} are you looking for?")
+    print_options(options2)
+    choice2 = get_choice(options2)
+    item = options2[choice2]
+    
+    print(f"\nYou have selected {item} from the {category} category. Thank you for shopping with us!")
+
+if __name__ == "__main__":
+    convenience_store_chatbot()
