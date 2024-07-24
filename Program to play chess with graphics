@@ -1,0 +1,108 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+WIDTH, HEIGHT = 800, 800
+ROWS, COLS = 8, 8
+SQUARE_SIZE = WIDTH // COLS
+
+# Colors
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREY = (128, 128, 128)
+
+# Load images
+def load_images():
+    pieces = ['wp', 'bp', 'wr', 'br', 'wn', 'bn', 'wb', 'bb', 'wq', 'bq', 'wk', 'bk']
+    for piece in pieces:
+        IMAGES[piece] = pygame.transform.scale(pygame.image.load(f'images/{piece}.png'), (SQUARE_SIZE, SQUARE_SIZE))
+
+# Draw the board
+def draw_board(win):
+    colors = [WHITE, GREY]
+    for row in range(ROWS):
+        for col in range(COLS):
+            color = colors[(row + col) % 2]
+            pygame.draw.rect(win, color, (col * SQUARE_SIZE, row * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
+
+# Draw pieces
+def draw_pieces(win, board):
+    for row in range(ROWS):
+        for col in range(COLS):
+            piece = board[row][col]
+            if piece != "--":
+                win.blit(IMAGES[piece], (col * SQUARE_SIZE, row * SQUARE_SIZE))
+
+# Main drawing function
+def draw(win, board):
+    draw_board(win)
+    draw_pieces(win, board)
+    pygame.display.update()
+
+# Initial board setup
+def create_board():
+    board = [
+        ["br", "bn", "bb", "bq", "bk", "bb", "bn", "br"],
+        ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
+        ["wr", "wn", "wb", "wq", "wk", "wb", "wn", "wr"]
+    ]
+    return board
+
+# Move a piece
+def move_piece(board, start_pos, end_pos):
+    piece = board[start_pos[0]][start_pos[1]]
+    board[start_pos[0]][start_pos[1]] = "--"
+    board[end_pos[0]][end_pos[1]] = piece
+
+# Main function
+def main():
+    win = pygame.display.set_mode((WIDTH, HEIGHT))
+    pygame.display.set_caption('Chess')
+
+    board = create_board()
+    selected_piece = None
+    selected_pos = [0, 0]
+    load_images()
+
+    clock = pygame.time.Clock()
+    running = True
+    while running:
+        draw(win, board)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    selected_pos[1] = max(0, selected_pos[1] - 1)
+                if event.key == pygame.K_RIGHT:
+                    selected_pos[1] = min(COLS - 1, selected_pos[1] + 1)
+                if event.key == pygame.K_UP:
+                    selected_pos[0] = max(0, selected_pos[0] - 1)
+                if event.key == pygame.K_DOWN:
+                    selected_pos[0] = min(ROWS - 1, selected_pos[0] + 1)
+                if event.key == pygame.K_RETURN:
+                    if not selected_piece:
+                        if board[selected_pos[0]][selected_pos[1]] != "--":
+                            selected_piece = selected_pos.copy()
+                    else:
+                        move_piece(board, selected_piece, selected_pos)
+                        selected_piece = None
+
+        clock.tick(30)
+    pygame.quit()
+    sys.exit()
+
+# Global dictionary to hold images
+IMAGES = {}
+
+if __name__ == "__main__":
+    main()
