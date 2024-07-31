@@ -1,0 +1,90 @@
+import pygame
+import random
+
+# Initialize the pygame
+pygame.init()
+
+# Screen dimensions
+WIDTH, HEIGHT = 600, 400
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Pac-Man")
+
+# Colors
+BLACK = (0, 0, 0)
+YELLOW = (255, 255, 0)
+RED = (255, 0, 0)
+
+# Player settings
+PACMAN_SIZE = 20
+PACMAN_SPEED = 5
+player_x, player_y = WIDTH // 2, HEIGHT // 2
+
+# Ghost settings
+GHOST_SIZE = 20
+ghost_x, ghost_y = random.randint(0, WIDTH-GHOST_SIZE), random.randint(0, HEIGHT-GHOST_SIZE)
+
+# Maze settings
+maze = [
+    "########################",
+    "#............##........#",
+    "#.####.#####.##.#####..#",
+    "#......................#",
+    "####.##.########.##.####",
+    "#......##......##......#",
+    "#.##.####.##.####.##...#",
+    "#......##..........##..#",
+    "#.####.##.##.##.##.####.#",
+    "#......................#",
+    "########################"
+]
+
+TILE_SIZE = WIDTH // len(maze[0])
+
+# Functions
+def draw_maze():
+    for row in range(len(maze)):
+        for col in range(len(maze[row])):
+            if maze[row][col] == '#':
+                pygame.draw.rect(WIN, BLACK, (col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE))
+
+def move_player(keys):
+    global player_x, player_y
+    if keys[pygame.K_LEFT] and player_x - PACMAN_SPEED > 0:
+        player_x -= PACMAN_SPEED
+    if keys[pygame.K_RIGHT] and player_x + PACMAN_SPEED + PACMAN_SIZE < WIDTH:
+        player_x += PACMAN_SPEED
+    if keys[pygame.K_UP] and player_y - PACMAN_SPEED > 0:
+        player_y -= PACMAN_SPEED
+    if keys[pygame.K_DOWN] and player_y + PACMAN_SPEED + PACMAN_SIZE < HEIGHT:
+        player_y += PACMAN_SPEED
+
+def move_ghost():
+    global ghost_x, ghost_y
+    directions = [(0, -GHOST_SIZE), (0, GHOST_SIZE), (-GHOST_SIZE, 0), (GHOST_SIZE, 0)]
+    direction = random.choice(directions)
+    ghost_x = (ghost_x + direction[0]) % WIDTH
+    ghost_y = (ghost_y + direction[1]) % HEIGHT
+
+# Main loop
+run = True
+clock = pygame.time.Clock()
+
+while run:
+    clock.tick(30)
+    WIN.fill((0, 0, 0))
+    draw_maze()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    keys = pygame.key.get_pressed()
+    move_player(keys)
+    move_ghost()
+
+    pygame.draw.rect(WIN, YELLOW, (player_x, player_y, PACMAN_SIZE, PACMAN_SIZE))
+    pygame.draw.rect(WIN, RED, (ghost_x, ghost_y, GHOST_SIZE, GHOST_SIZE))
+
+    pygame.display.update()
+
+pygame.quit()
