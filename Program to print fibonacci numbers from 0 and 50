@@ -1,0 +1,19 @@
+def fibonacci_sequence(max_value):
+  fib_sequence = []
+  a, b = 0, 1
+  while a <= max_value:
+    fib_sequence.append(a)
+    a, b = b, a + b
+  return fib_sequence
+
+
+# Define the maximum value
+max_value = 50
+
+# Get the Fibonacci sequence up to the maximum value
+fib_sequence = fibonacci_sequence(max_value)
+
+# Print the Fibonacci numbers
+print("Fibonacci numbers between 0 and 50 are:")
+for num in fib_sequence:
+  print(num)
