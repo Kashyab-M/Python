@@ -1,0 +1,48 @@
+def recommend_fuel_efficiency_tips(car_make, car_model, current_mpg, average_speed, tire_pressure, maintenance_due):
+    tips = []
+
+    # Tip: Maintain a Steady Speed
+    if average_speed > 65:
+        tips.append("Try to maintain a steady speed and avoid high speeds. Speeds above 65 mph can significantly reduce fuel efficiency.")
+
+    # Tip: Keep Tires Properly Inflated
+    if tire_pressure < 30:
+        tips.append("Ensure your tires are properly inflated. Low tire pressure can decrease fuel efficiency. Aim for a tire pressure of 32-35 PSI.")
+
+    # Tip: Regular Maintenance
+    if maintenance_due:
+        tips.append("Regular maintenance such as oil changes, air filter replacement, and engine checks can keep your car running efficiently.")
+
+    # Tip: Lighten the Load
+    tips.append("Remove unnecessary weight from your car. Excess weight can reduce fuel efficiency.")
+
+    # Tip: Reduce Idle Time
+    tips.append("Avoid excessive idling. If you're stopped for more than a minute, consider turning off the engine to save fuel.")
+
+    # Tip: Use Cruise Control
+    tips.append("Use cruise control on highways to maintain a constant speed and improve fuel efficiency.")
+
+    # Tip: Drive Smoothly
+    tips.append("Avoid rapid acceleration and braking. Driving smoothly can improve fuel efficiency by up to 20%.")
+
+    # Tip: Plan Your Trips
+    tips.append("Plan your trips to avoid unnecessary driving. Combining errands into one trip can save fuel.")
+
+    print(f"\nFuel Efficiency Tips for {car_make} {car_model}:")
+    for tip in tips:
+        print(f"- {tip}")
+
+def main():
+    # User inputs
+    car_make = input("Enter your car's make (e.g., Honda, Toyota): ")
+    car_model = input("Enter your car's model (e.g., Civic, Corolla): ")
+    current_mpg = float(input("Enter your car's current fuel efficiency (mpg): "))
+    average_speed = float(input("Enter your average driving speed (mph): "))
+    tire_pressure = float(input("Enter your current tire pressure (PSI): "))
+    maintenance_due = input("Is your car due for maintenance? (yes/no): ").strip().lower() == 'yes'
+
+    # Recommend tips
+    recommend_fuel_efficiency_tips(car_make, car_model, current_mpg, average_speed, tire_pressure, maintenance_due)
+
+if __name__ == "__main__":
+    main()
