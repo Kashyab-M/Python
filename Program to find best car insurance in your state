@@ -1,0 +1,53 @@
+import requests
+
+# List of insurance providers with API endpoints or URLs (example placeholders)
+insurance_providers = {
+    "Provider1": "https://api.provider1.com/getQuote",
+    "Provider2": "https://api.provider2.com/getQuote",
+    "Provider3": "https://api.provider3.com/getQuote"
+}
+
+def get_quote(provider_url, state, car_model, car_year):
+    # Simulate API call with a request (this is a placeholder)
+    response = requests.get(provider_url, params={
+        "state": state,
+        "car_model": car_model,
+        "car_year": car_year
+    })
+    data = response.json()
+    return data['quote'], data['coverage_details']
+
+def find_best_insurance(state, car_model, car_year):
+    best_quote = float('inf')
+    best_provider = None
+    best_coverage = None
+
+    for provider, url in insurance_providers.items():
+        try:
+            quote, coverage = get_quote(url, state, car_model, car_year)
+            if quote < best_quote:
+                best_quote = quote
+                best_provider = provider
+                best_coverage = coverage
+        except Exception as e:
+            print(f"Failed to get quote from {provider}: {e}")
+
+    return best_provider, best_quote, best_coverage
+
+def main():
+    # User inputs
+    state = input("Enter your state (e.g., CA, TX, NY): ")
+    car_model = input("Enter your car model (e.g., Honda Civic): ")
+    car_year = input("Enter your car's manufacturing year (e.g., 2020): ")
+
+    # Find the best insurance
+    provider, quote, coverage = find_best_insurance(state, car_model, car_year)
+
+    if provider:
+        print(f"The best insurance provider is {provider} with a quote of ${quote:.2f}")
+        print("Coverage details:", coverage)
+    else:
+        print("Could not find a suitable insurance provider.")
+
+if __name__ == "__main__":
+    main()
