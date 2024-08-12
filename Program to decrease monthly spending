@@ -1,0 +1,49 @@
+def get_user_input(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            if value < 0:
+                print("Please enter a positive value.")
+            else:
+                return value
+        except ValueError:
+            print("Please enter a valid number.")
+
+def analyze_budget(income, needs, wants, savings):
+    ideal_needs = income * 0.50
+    ideal_wants = income * 0.30
+    ideal_savings = income * 0.20
+
+    print("\n--- Budget Analysis ---")
+    print(f"Your monthly income: ${income:.2f}")
+    print(f"Your total spending on needs: ${needs:.2f} (Ideal: ${ideal_needs:.2f})")
+    print(f"Your total spending on wants: ${wants:.2f} (Ideal: ${ideal_wants:.2f})")
+    print(f"Your total savings/debt repayment: ${savings:.2f} (Ideal: ${ideal_savings:.2f})\n")
+
+    if needs > ideal_needs:
+        print(f"Consider reducing your spending on needs by: ${needs - ideal_needs:.2f}")
+    else:
+        print("Your spending on needs is within the recommended range.")
+
+    if wants > ideal_wants:
+        print(f"Consider reducing your spending on wants by: ${wants - ideal_wants:.2f}")
+    else:
+        print("Your spending on wants is within the recommended range.")
+
+    if savings < ideal_savings:
+        print(f"Consider increasing your savings by: ${ideal_savings - savings:.2f}")
+    else:
+        print("Your savings are within the recommended range.")
+
+def main():
+    print("Welcome to the Monthly Budget Analyzer!\n")
+    
+    income = get_user_input("Enter your total monthly income: $")
+    needs = get_user_input("Enter your total monthly spending on needs (e.g., rent, utilities): $")
+    wants = get_user_input("Enter your total monthly spending on wants (e.g., dining out, entertainment): $")
+    savings = get_user_input("Enter your total monthly savings or debt repayment: $")
+
+    analyze_budget(income, needs, wants, savings)
+
+if __name__ == "__main__":
+    main()
