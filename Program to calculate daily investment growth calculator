@@ -1,0 +1,29 @@
+# Define the investment function
+def daily_investment(amount_per_day, interest_rate, days):
+    total_invested = 0
+    balance = 0
+
+    # Loop through each day
+    for day in range(1, days + 1):
+        # Add daily investment to the total invested
+        total_invested += amount_per_day
+        # Add daily investment to balance
+        balance += amount_per_day
+        # Apply daily compound interest
+        balance *= (1 + interest_rate / 365)
+        print(f"Day {day}: Invested {amount_per_day:.2f}, Balance {balance:.2f}")
+
+    return total_invested, balance
+
+# Set investment parameters
+amount_per_day = float(input("Enter the amount to invest daily: "))
+interest_rate = float(input("Enter the annual interest rate (in decimal form, e.g., 0.05 for 5%): "))
+days = int(input("Enter the number of days to invest: "))
+
+# Perform the investment calculation
+total_invested, final_balance = daily_investment(amount_per_day, interest_rate, days)
+
+# Output the results
+print("\nInvestment Summary")
+print(f"Total Invested: ${total_invested:.2f}")
+print(f"Final Balance: ${final_balance:.2f}")
